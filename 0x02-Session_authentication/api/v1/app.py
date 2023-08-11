@@ -38,7 +38,8 @@ def bef_req():
         if auth.require_auth(request.path, excluded):
             if auth.authorization_header(request) is None:
                 abort(401, description="Unauthorized")
-            if auth.current_user(request) is None:
+            request.current_user = auth.current_user(request)
+            if request.current_user is None:
                 abort(403, description="Forbidden")
 
 
